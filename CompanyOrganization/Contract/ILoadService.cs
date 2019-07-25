@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CompanyEmployeesBalancing.Services.Contract
+namespace CompanyOrganization.Contract
 {
     public interface ILoadService
     {

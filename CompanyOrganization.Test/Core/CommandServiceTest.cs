@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CompanyEmployeesBalancing.Domain;
-using CompanyEmployeesBalancing.Domain.BusinessObjects;
-using CompanyEmployeesBalancing.Domain.Enumeration;
-using CompanyEmployeesBalancing.Resources;
-using CompanyEmployeesBalancing.Services.Implementation;
-using CompanyEmployeesBalancing.Services.Storage;
-using CompanyEmployeesBalancing.Test.Configuration;
-using CompanyEmployeesBalancing.Test.Faker;
+﻿using CompanyEmployeesBalancing.Test.Faker;
+using CompanyOrganization;
+using CompanyOrganization.Domain.BusinessObjects;
+using CompanyOrganization.DTOs;
+using CompanyOrganization.Enumeration;
+using CompanyOrganization.Implementation;
+using CompanyOrganization.Storage;
+using CompanyOrganization.Test;
+using CompanyOrganization.Utils;
 using Faker;
 using FizzWare.NBuilder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CompanyEmployeesBalancing.Test.Core
 {

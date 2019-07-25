@@ -1,7 +1,7 @@
-﻿using CompanyEmployeesBalancing.Domain.BusinessObjects;
+﻿using CompanyOrganization.Domain.BusinessObjects;
 using System.Collections.Generic;
 
-namespace CompanyEmployeesBalancing.Services.Contract
+namespace CompanyOrganization.Contract
 {
     public interface IEmployeeService
     {

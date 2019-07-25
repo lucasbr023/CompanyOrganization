@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using CompanyEmployeesBalancing.Resources;
-using CompanyEmployeesBalancing.Services.Implementation;
-using CompanyEmployeesBalancing.Test.Configuration;
-using CompanyEmployeesBalancing.Test.Faker;
+﻿using CompanyEmployeesBalancing.Test.Faker;
+using CompanyOrganization;
+using CompanyOrganization.Implementation;
+using CompanyOrganization.Test;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
 
 namespace CompanyEmployeesBalancing.Test.Core
 {

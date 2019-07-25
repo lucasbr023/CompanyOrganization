@@ -1,11 +1,11 @@
-﻿using CompanyEmployeesBalancing.Resources;
-using CompanyEmployeesBalancing.Services.Contract;
+﻿using CompanyOrganization.Contract;
+using CompanyOrganization.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace CompanyEmployeesBalancing.Services.Implementation
+namespace CompanyOrganization.Implementation
 {
     public class LoadService : ILoadService
     {

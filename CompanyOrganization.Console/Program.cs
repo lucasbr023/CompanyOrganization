@@ -1,5 +1,5 @@
-﻿using CompanyEmployeesBalancing.Console.Configuration;
-using CompanyEmployeesBalancing.Services.Implementation;
+﻿using CompanyOrganization.Console.Configuration;
+using CompanyOrganization.Implementation;
 
 namespace CompanyOrganization.Console
 {

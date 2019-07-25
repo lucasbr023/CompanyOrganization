@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SimpleInjector;
 
-namespace CompanyEmployeesBalancing.Test.Configuration
+namespace CompanyOrganization.Test
 {
     [TestClass]
     public class DependencyResolver

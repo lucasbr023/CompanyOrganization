@@ -1,6 +1,6 @@
-﻿using CompanyEmployeesBalancing.Domain.BusinessObjects;
+﻿using CompanyOrganization.Domain.BusinessObjects;
 
-namespace CompanyEmployeesBalancing.Services.Contract
+namespace CompanyOrganization.Contract
 {
     public interface IBalanceService
     {

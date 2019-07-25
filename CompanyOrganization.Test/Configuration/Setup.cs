@@ -1,6 +1,6 @@
-﻿using CompanyEmployeesBalancing.Services.Contract;
-using CompanyEmployeesBalancing.Services.Implementation;
-using CompanyEmployeesBalancing.Test.Configuration;
+﻿using CompanyOrganization.Contract;
+using CompanyOrganization.Implementation;
+using CompanyOrganization.Test;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SimpleInjector;
 

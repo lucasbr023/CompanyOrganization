@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using CompanyEmployeesBalancing.Domain.BusinessObjects;
+﻿using CompanyOrganization.Domain.BusinessObjects;
 using Faker;
 using FizzWare.NBuilder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace CompanyEmployeesBalancing.Test.Faker
 {

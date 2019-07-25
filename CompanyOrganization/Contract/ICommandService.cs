@@ -1,6 +1,6 @@
-﻿using CompanyEmployeesBalancing.Domain;
+﻿using CompanyOrganization.DTOs;
 
-namespace CompanyEmployeesBalancing.Services.Contract
+namespace CompanyOrganization.Contract
 {
     public interface ICommandService
     {

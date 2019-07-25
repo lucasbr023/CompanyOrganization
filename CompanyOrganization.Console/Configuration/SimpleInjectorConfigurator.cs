@@ -1,8 +1,8 @@
-﻿using CompanyEmployeesBalancing.Services.Contract;
-using CompanyEmployeesBalancing.Services.Implementation;
+﻿using CompanyOrganization.Contract;
+using CompanyOrganization.Implementation;
 using SimpleInjector;
 
-namespace CompanyEmployeesBalancing.Console.Configuration
+namespace CompanyOrganization.Console.Configuration
 {
     public class SimpleInjectorConfigurator
     {

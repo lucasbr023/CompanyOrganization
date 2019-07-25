@@ -1,13 +1,13 @@
-﻿using CompanyEmployeesBalancing.Domain;
-using CompanyEmployeesBalancing.Resources;
-using CompanyEmployeesBalancing.Services.Contract;
-using CompanyEmployeesBalancing.Services.Storage;
+﻿using CompanyOrganization.Contract;
+using CompanyOrganization.DTOs;
+using CompanyOrganization.Enumeration;
+using CompanyOrganization.Storage;
+using CompanyOrganization.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CompanyEmployeesBalancing.Domain.Enumeration;
 
-namespace CompanyEmployeesBalancing.Services.Implementation
+namespace CompanyOrganization.Implementation
 {
     public class CommandService : ICommandService
     {

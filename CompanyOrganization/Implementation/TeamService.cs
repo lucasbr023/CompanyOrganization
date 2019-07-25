@@ -1,11 +1,11 @@
-﻿using CompanyEmployeesBalancing.Domain.BusinessObjects;
-using CompanyEmployeesBalancing.Resources;
-using CompanyEmployeesBalancing.Services.Contract;
+﻿using CompanyOrganization.Contract;
+using CompanyOrganization.Domain.BusinessObjects;
+using CompanyOrganization.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CompanyEmployeesBalancing.Services.Implementation
+namespace CompanyOrganization.Implementation
 {
     public class TeamService : ITeamService
     {

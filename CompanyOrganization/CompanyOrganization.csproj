@@ -9,8 +9,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CompanyOrganization.Domain\CompanyOrganization.Domain.csproj" />
-    <ProjectReference Include="..\CompanyOrganization.Resources\CompanyOrganization.Resources.csproj" />
+    <Compile Update="Messages.Designer.cs">
+      <DependentUpon>Messages.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Messages.resx">
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

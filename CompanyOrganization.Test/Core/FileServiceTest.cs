@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using CompanyEmployeesBalancing.Resources;
-using CompanyEmployeesBalancing.Services.Implementation;
-using CompanyEmployeesBalancing.Test.Configuration;
+﻿using CompanyOrganization;
+using CompanyOrganization.Implementation;
+using CompanyOrganization.Test;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Linq;
 
 namespace CompanyEmployeesBalancing.Test.Core
 {

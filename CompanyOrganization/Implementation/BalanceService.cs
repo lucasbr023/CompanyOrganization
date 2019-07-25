@@ -1,11 +1,10 @@
-﻿using CompanyEmployeesBalancing.Domain.BusinessObjects;
-using CompanyEmployeesBalancing.Resources;
-using CompanyEmployeesBalancing.Services.Contract;
-using CompanyEmployeesBalancing.Services.Storage;
+﻿using CompanyOrganization.Contract;
+using CompanyOrganization.Domain.BusinessObjects;
+using CompanyOrganization.Storage;
 using System;
 using System.Linq;
 
-namespace CompanyEmployeesBalancing.Services.Implementation
+namespace CompanyOrganization.Implementation
 {
     public class BalanceService : IBalanceService
     {
