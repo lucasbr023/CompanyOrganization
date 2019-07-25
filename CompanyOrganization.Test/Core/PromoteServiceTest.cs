@@ -82,7 +82,7 @@ namespace CompanyEmployeesBalancing.Test.Core
             _promoteService.Promote(2);
             Assert.AreEqual(3, employees.FirstOrDefault(employee => employee.Name.Equals(nameEmployeePromoted1)).ProgressionLevel);
             Assert.AreEqual(4, employees.FirstOrDefault(employee => employee.Name.Equals(nameEmployeePromoted2)).ProgressionLevel);
-            Assert.AreEqual(2019, CurrentYear.GetInstance.Year);
+            Assert.AreEqual(2020, CurrentYear.GetInstance.Year);
         }
 
         [TestMethod]
@@ -146,7 +146,7 @@ namespace CompanyEmployeesBalancing.Test.Core
             CompanyLocalStorage.GetInstance.UpdateEmployees(employees);
 
             _promoteService.Promote(1);
-            Assert.AreEqual(2019, CurrentYear.GetInstance.Year);
+            Assert.AreEqual(2020, CurrentYear.GetInstance.Year);
         }
 
         [TestMethod]
