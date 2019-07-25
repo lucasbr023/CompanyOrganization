@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeCoverage" Version="15.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CompanyOrganization.Domain\CompanyOrganization.Domain.csproj" />
+    <ProjectReference Include="..\CompanyOrganization.Resources\CompanyOrganization.Resources.csproj" />
+  </ItemGroup>
+
+</Project>
