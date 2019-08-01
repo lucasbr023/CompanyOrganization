@@ -6,16 +6,16 @@ using System.Linq;
 
 namespace CompanyOrganization.Implementation
 {
-    public class BalanceService : IBalanceService
+    public class Balance : ICommand
     {
-        private readonly ITeamService _teamService;
-        
-        public BalanceService(ITeamService teamService)
+        private TeamService _teamService;
+
+        public Balance()
         {
-            _teamService = teamService;
+            _teamService = new TeamService();
         }
 
-        public void Balance()
+        public string Execute(string parameters = null)
         {
             var company = CompanyLocalStorage.GetInstance.GetCompany();
             if (company.Teams.Any())
@@ -40,6 +40,7 @@ namespace CompanyOrganization.Implementation
                 }
             }
             CompanyLocalStorage.GetInstance.UpdateCompany(company);
+            return ToString(company);
         }
 
         private void ValidateTeamsWithLessThanMinimumMaturity(Company company)
@@ -50,13 +51,13 @@ namespace CompanyOrganization.Implementation
             }
         }
 
-        private void MoveEmployeeBetweenTeams(Team teamFrom, Team teamTo, Employee employee)
+        private void MoveEmployeeBetweenTeams(Domain.BusinessObjects.Team teamFrom, Domain.BusinessObjects.Team teamTo, Domain.BusinessObjects.Employee employee)
         {
             teamTo.Employees.Add(employee);
             teamFrom.Employees.Remove(employee);
         }
 
-        private Employee GetEmployeeToTransferToAnotherTeam(Team teamMaximumMaturity, int difference)
+        private Employee GetEmployeeToTransferToAnotherTeam(Domain.BusinessObjects.Team teamMaximumMaturity, int difference)
         {
             return teamMaximumMaturity
                    .Employees
@@ -65,7 +66,7 @@ namespace CompanyOrganization.Implementation
                    .FirstOrDefault();
         }
 
-        private int GetMaturityDifferenceBetweenTeams(Team teamMaximumMaturity, Team teamMinimumMaturity)
+        private int GetMaturityDifferenceBetweenTeams(Domain.BusinessObjects.Team teamMaximumMaturity, Domain.BusinessObjects.Team teamMinimumMaturity)
         {
             return _teamService.GetExtraMaturity(teamMaximumMaturity) - _teamService.GetExtraMaturity(teamMinimumMaturity);
         }
@@ -89,7 +90,7 @@ namespace CompanyOrganization.Implementation
             return teams.ToList().FirstOrDefault();
         }
 
-        public string BalanceToString(Company company)
+        public string ToString(Company company)
         {
             var toString = "===============BALANCE=============== \n";
             if (company.Teams.Any())

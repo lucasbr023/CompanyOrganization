@@ -7,17 +7,17 @@ using System.Linq;
 
 namespace CompanyOrganization.Implementation
 {
-    public class TeamService : ITeamService
+    public class TeamService 
     {
-        public List<Team> CreateTeams(IList<string> teamsLines)
+        public List<Domain.BusinessObjects.Team> CreateTeams(IList<string> teamsLines)
         {
-            var teams = new List<Team>();
+            var teams = new List<Domain.BusinessObjects.Team>();
             foreach (var line in teamsLines)
             {
                 var splitLine = line.Split(Constants.SEMICOLON).ToList();
                 ValidateTeamLine(splitLine);
 
-                teams.Add(new Team()
+                teams.Add(new Domain.BusinessObjects.Team()
                 {
                     Name = splitLine[Constants.INDEX_NAME_TEAM],
                     MinimunMaturity = Util.ConvertStringToInt(splitLine[Constants.INDEX_MINIMUM_MATURITY_TEAM]),
@@ -26,12 +26,12 @@ namespace CompanyOrganization.Implementation
             return teams;
         }
 
-        public int GetCurrentMaturity(Team team)
+        public int GetCurrentMaturity(Domain.BusinessObjects.Team team)
         {
             return team.Employees.Sum(employee => employee.ProgressionLevel);
         }
 
-        public int GetExtraMaturity(Team team)
+        public int GetExtraMaturity(Domain.BusinessObjects.Team team)
         {
             return GetCurrentMaturity(team) - team.MinimunMaturity;
         }

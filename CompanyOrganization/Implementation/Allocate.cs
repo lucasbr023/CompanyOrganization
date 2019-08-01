@@ -7,28 +7,30 @@ using System.Linq;
 
 namespace CompanyOrganization.Implementation
 {
-    public class AllocateService : IAllocateService
+    public class Allocate : ICommand
     {
-        private readonly ITeamService _teamService;
+        private readonly TeamService _teamService;
 
-        public AllocateService(ITeamService teamService)
+        public Allocate()
         {
-            _teamService = teamService;
+            _teamService = new TeamService();
         }
-
-        public void Allocate(IList<Team> teams, IList<Employee> employees)
+        public string Execute(string parameters = null)
         {
-            var company = CompanyLocalStorage.GetInstance.CreateCompany();
-            company.Teams = teams;
+            var companyLocalStorage = CompanyLocalStorage.GetInstance;
+            var company = companyLocalStorage.GetCompany();
+            company.Teams = companyLocalStorage.GetTeams();
             ValidateCompany(company);
 
-            AddEmployeesToTeams(employees, company);
+            AddEmployeesToTeams(companyLocalStorage.GetEmployees(), company);
 
             ValidateTeamsMinimumMaturity(company);
             CompanyLocalStorage.GetInstance.UpdateCompany(company);
+
+            return ToString(company);
         }
 
-        private void AddEmployeesToTeams(IList<Employee> employees, Company company)
+        private void AddEmployeesToTeams(IList<Domain.BusinessObjects.Employee> employees, Company company)
         {
             foreach (var employee in employees.OrderByDescending(e => e.ProgressionLevel))
             {
@@ -53,7 +55,7 @@ namespace CompanyOrganization.Implementation
             }
         }
 
-        private Team GetBestTeamToAllocate(Company company, Employee employee)
+        private Team GetBestTeamToAllocate(Company company, Domain.BusinessObjects.Employee employee)
         {
             var allocateTeam = GetTeamWithLessThanMinimumMaturity(company, employee);
 
@@ -64,11 +66,11 @@ namespace CompanyOrganization.Implementation
             return allocateTeam;
         }
 
-        private Team GetTeamWithLessThanMinimumMaturity(Company company, Employee employee)
+        private Team GetTeamWithLessThanMinimumMaturity(Company company, Domain.BusinessObjects.Employee employee)
         {
             return company.Teams.FirstOrDefault(team =>
-            Math.Abs(_teamService.GetExtraMaturity(team)) >= employee.ProgressionLevel
-            && _teamService.GetExtraMaturity(team) < 0);
+                                                Math.Abs(_teamService.GetExtraMaturity(team)) >= employee.ProgressionLevel
+                                                && _teamService.GetExtraMaturity(team) < 0);
         }
 
         private Team GetTeamWithLessRequiredMinimumMaturity(Company company)
@@ -76,7 +78,7 @@ namespace CompanyOrganization.Implementation
             return company.Teams.OrderBy(team => _teamService.GetExtraMaturity(team)).FirstOrDefault();
         }
 
-        public string AllocateToString(Company company)
+        public string ToString(Company company)
         {
             var toString = "===============ALLOCATE=============== \n";
             if (company.Teams.Any())
