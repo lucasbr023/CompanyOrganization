@@ -6,24 +6,24 @@ using SimpleInjector;
 
 namespace CompanyEmployeesBalancing.Test
 {
-    [TestClass]
-    public class Setup
-    {
-        [AssemblyInitialize]
-        public static void AssemblyInit(TestContext testContext)
-        {
-            var container = new Container();
+    //[TestClass]
+    //public class Setup
+    //{
+    //    [AssemblyInitialize]
+    //    public static void AssemblyInit(TestContext testContext)
+    //    {
+    //        var container = new Container();
 
-            container.Register<ILoadService, LoadService>(Lifestyle.Singleton);
-            container.Register<ICommandService, CommandService>(Lifestyle.Singleton);
-            container.Register<IAllocateService, AllocateService>(Lifestyle.Singleton);
-            container.Register<IBalanceService, BalanceService>(Lifestyle.Singleton);
-            container.Register<IEmployeeService, EmployeeService>(Lifestyle.Singleton);
-            container.Register<ITeamService, TeamService>(Lifestyle.Singleton);
-            container.Register<IPromoteService, PromoteService>(Lifestyle.Singleton);
-            container.Verify();
+    //        container.Register<ILoadService, Load>(Lifestyle.Singleton);
+    //        container.Register<ICommandService, Command>(Lifestyle.Singleton);
+    //        container.Register<IAllocateService, Allocate>(Lifestyle.Singleton);
+    //        container.Register<IBalanceService, Balance>(Lifestyle.Singleton);
+    //        container.Register<IEmployeeService, Employee>(Lifestyle.Singleton);
+    //        container.Register<ITeamService, Team>(Lifestyle.Singleton);
+    //        container.Register<IPromoteService, Promote>(Lifestyle.Singleton);
+    //        container.Verify();
 
-            DependencyResolver.SetupContainer(container);
-        }
-    }
+    //        DependencyResolver.SetupContainer(container);
+    //    }
+    //}
 }

@@ -1,5 +1,4 @@
 ﻿using CompanyOrganization.Contract;
-using CompanyOrganization.Domain.BusinessObjects;
 using CompanyOrganization.Storage;
 using CompanyOrganization.Utils;
 using System;
@@ -8,11 +7,16 @@ using System.Linq;
 
 namespace CompanyOrganization.Implementation
 {
-    public class PromoteService : IPromoteService
+    public class Promote : ICommand
     {
-        public void Promote(int numberEmployeesToPromote)
+        public string Execute(string parameters = null)
         {
-            var employeesToPromote = GetEmployeesToPromote(numberEmployeesToPromote);
+            var parameter = parameters.Split(' ');
+           
+            ValidateArgumentsPromote(parameter);
+            ValidatePromoteArgumentValue(parameter);
+
+            var employeesToPromote = GetEmployeesToPromote(GetValueFromCommandValue(parameter.Last()));
 
             ValidateEmployeesToPromote(employeesToPromote);
 
@@ -22,10 +26,32 @@ namespace CompanyOrganization.Implementation
                 employeeToPromote.LastProgressionYear = DateTime.Now.Year;
             }
             CurrentYear.GetInstance.AddYear();
-            Console.WriteLine(PromoteToString(employeesToPromote));
+            return ToString(employeesToPromote);
         }
 
-        private static void ValidateEmployeesToPromote(IList<Employee> employeesToPromote)
+        private void ValidateArgumentsPromote(IList<string> commandActionSplit)
+        {
+            if (commandActionSplit.ElementAtOrDefault(Constants.INDEX_ARGUMENTS_PROMOTE) == null)
+            {
+                throw new Exception(Messages.NumberEmployeePromoteNotInformed);
+            }
+        }
+
+        private void ValidatePromoteArgumentValue(IList<string> commandActionSplit)
+        {
+            var value = commandActionSplit.FirstOrDefault(command => !command.ToLower().Equals(Constants.COMMAND_PROMOTE));
+            GetValueFromCommandValue(value);
+        }
+
+        private int GetValueFromCommandValue(string commandValue)
+        {
+            if (!int.TryParse(commandValue, out var value))
+            {
+                throw new Exception(Messages.InvalidValue);
+            }
+            return value;
+        }
+        private static void ValidateEmployeesToPromote(IList<Domain.BusinessObjects.Employee> employeesToPromote)
         {
             if (!employeesToPromote.Any())
             {
@@ -33,7 +59,7 @@ namespace CompanyOrganization.Implementation
             }
         }
 
-        public IList<Employee> GetEmployeesToPromote(int numberEmployeesToPromote)
+        public IList<Domain.BusinessObjects.Employee> GetEmployeesToPromote(int numberEmployeesToPromote)
         {
             var employees = CompanyLocalStorage.GetInstance.GetEmployees();
             var employeesToPromote = employees
@@ -45,12 +71,12 @@ namespace CompanyOrganization.Implementation
             return employeesToPromote;
         }
 
-        private int CompanyTimePoints(Employee employee)
+        private int CompanyTimePoints(Domain.BusinessObjects.Employee employee)
         {
             return (CurrentYear.GetInstance.Year - employee.AdmissionYear) * 2;
         }
 
-        private int TimeWithoutProgressionPoints(Employee employee)
+        private int TimeWithoutProgressionPoints(Domain.BusinessObjects.Employee employee)
         {
             var timeWithoutProgressionPoints = 0;
             var timeWithoutProgression = CurrentYear.GetInstance.Year - employee.LastProgressionYear;
@@ -63,19 +89,19 @@ namespace CompanyOrganization.Implementation
             return timeWithoutProgressionPoints;
         }
 
-        private int AgePoint(Employee employee)
+        private int AgePoint(Domain.BusinessObjects.Employee employee)
         {
             return (CurrentYear.GetInstance.Year - employee.BirthYear) / 5;
         }
 
-        private int PointsToProgression(Employee employee)
+        private int PointsToProgression(Domain.BusinessObjects.Employee employee)
         {
             return CompanyTimePoints(employee)
                 + TimeWithoutProgressionPoints(employee)
                 + AgePoint(employee);
         }
 
-        public string PromoteToString(IList<Employee> employees)
+        public string ToString(IList<Domain.BusinessObjects.Employee> employees)
         {
             var toString = "===============PROMOTE=============== \n";
             foreach (var employee in employees)
