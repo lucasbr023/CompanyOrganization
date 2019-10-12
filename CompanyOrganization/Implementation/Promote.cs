@@ -1,4 +1,5 @@
 ﻿using CompanyOrganization.Contract;
+using CompanyOrganization.Domain.BusinessObjects;
 using CompanyOrganization.Storage;
 using CompanyOrganization.Utils;
 using System;
@@ -51,7 +52,7 @@ namespace CompanyOrganization.Implementation
             }
             return value;
         }
-        private static void ValidateEmployeesToPromote(IList<Domain.BusinessObjects.Employee> employeesToPromote)
+        private static void ValidateEmployeesToPromote(IList<Employee> employeesToPromote)
         {
             if (!employeesToPromote.Any())
             {
@@ -59,7 +60,7 @@ namespace CompanyOrganization.Implementation
             }
         }
 
-        public IList<Domain.BusinessObjects.Employee> GetEmployeesToPromote(int numberEmployeesToPromote)
+        public IList<Employee> GetEmployeesToPromote(int numberEmployeesToPromote)
         {
             var employees = CompanyLocalStorage.GetInstance.GetEmployees();
             var employeesToPromote = employees
@@ -71,12 +72,12 @@ namespace CompanyOrganization.Implementation
             return employeesToPromote;
         }
 
-        private int CompanyTimePoints(Domain.BusinessObjects.Employee employee)
+        private int CompanyTimePoints(Employee employee)
         {
             return (CurrentYear.GetInstance.Year - employee.AdmissionYear) * 2;
         }
 
-        private int TimeWithoutProgressionPoints(Domain.BusinessObjects.Employee employee)
+        private int TimeWithoutProgressionPoints(Employee employee)
         {
             var timeWithoutProgressionPoints = 0;
             var timeWithoutProgression = CurrentYear.GetInstance.Year - employee.LastProgressionYear;
@@ -89,19 +90,19 @@ namespace CompanyOrganization.Implementation
             return timeWithoutProgressionPoints;
         }
 
-        private int AgePoint(Domain.BusinessObjects.Employee employee)
+        private int AgePoint(Employee employee)
         {
             return (CurrentYear.GetInstance.Year - employee.BirthYear) / 5;
         }
 
-        private int PointsToProgression(Domain.BusinessObjects.Employee employee)
+        private int PointsToProgression(Employee employee)
         {
             return CompanyTimePoints(employee)
                 + TimeWithoutProgressionPoints(employee)
                 + AgePoint(employee);
         }
 
-        public string ToString(IList<Domain.BusinessObjects.Employee> employees)
+        public string ToString(IList<Employee> employees)
         {
             var toString = "===============PROMOTE=============== \n";
             foreach (var employee in employees)

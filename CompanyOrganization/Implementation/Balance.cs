@@ -51,13 +51,13 @@ namespace CompanyOrganization.Implementation
             }
         }
 
-        private void MoveEmployeeBetweenTeams(Domain.BusinessObjects.Team teamFrom, Domain.BusinessObjects.Team teamTo, Domain.BusinessObjects.Employee employee)
+        private void MoveEmployeeBetweenTeams(Team teamFrom, Team teamTo, Employee employee)
         {
             teamTo.Employees.Add(employee);
             teamFrom.Employees.Remove(employee);
         }
 
-        private Employee GetEmployeeToTransferToAnotherTeam(Domain.BusinessObjects.Team teamMaximumMaturity, int difference)
+        private Employee GetEmployeeToTransferToAnotherTeam(Team teamMaximumMaturity, int difference)
         {
             return teamMaximumMaturity
                    .Employees
@@ -66,7 +66,7 @@ namespace CompanyOrganization.Implementation
                    .FirstOrDefault();
         }
 
-        private int GetMaturityDifferenceBetweenTeams(Domain.BusinessObjects.Team teamMaximumMaturity, Domain.BusinessObjects.Team teamMinimumMaturity)
+        private int GetMaturityDifferenceBetweenTeams(Team teamMaximumMaturity, Team teamMinimumMaturity)
         {
             return _teamService.GetExtraMaturity(teamMaximumMaturity) - _teamService.GetExtraMaturity(teamMinimumMaturity);
         }

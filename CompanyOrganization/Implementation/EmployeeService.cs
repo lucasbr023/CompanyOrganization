@@ -1,4 +1,4 @@
-﻿using CompanyOrganization.Contract;
+﻿using CompanyOrganization.Domain.BusinessObjects;
 using CompanyOrganization.Utils;
 using System;
 using System.Collections.Generic;
@@ -8,16 +8,16 @@ namespace CompanyOrganization.Implementation
 {
     public class EmployeeService 
     {
-        public List<Domain.BusinessObjects.Employee> CreateEmployees(IList<string> employeesLines)
+        public List<Employee> CreateEmployees(IList<string> employeesLines)
         {
-            var employees = new List<Domain.BusinessObjects.Employee>();
+            var employees = new List<Employee>();
 
             foreach (var line in employeesLines)
             {
                 var splitLine = line.Split(Constants.SEMICOLON).ToList();
                 ValidateEmployeeLine(splitLine);
 
-                employees.Add(new Domain.BusinessObjects.Employee()
+                employees.Add(new Employee()
                 {
                     Name = splitLine[Constants.INDEX_NAME_EMPLOYEE],
                     ProgressionLevel = Util.ConvertStringToInt(splitLine[Constants.INDEX_PROGRESSION_LEVEL_EMPLOYEE]),

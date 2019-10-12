@@ -30,7 +30,7 @@ namespace CompanyOrganization.Implementation
             return ToString(company);
         }
 
-        private void AddEmployeesToTeams(IList<Domain.BusinessObjects.Employee> employees, Company company)
+        private void AddEmployeesToTeams(IList<Employee> employees, Company company)
         {
             foreach (var employee in employees.OrderByDescending(e => e.ProgressionLevel))
             {
@@ -55,7 +55,7 @@ namespace CompanyOrganization.Implementation
             }
         }
 
-        private Team GetBestTeamToAllocate(Company company, Domain.BusinessObjects.Employee employee)
+        private Team GetBestTeamToAllocate(Company company, Employee employee)
         {
             var allocateTeam = GetTeamWithLessThanMinimumMaturity(company, employee);
 
@@ -66,7 +66,7 @@ namespace CompanyOrganization.Implementation
             return allocateTeam;
         }
 
-        private Team GetTeamWithLessThanMinimumMaturity(Company company, Domain.BusinessObjects.Employee employee)
+        private Team GetTeamWithLessThanMinimumMaturity(Company company, Employee employee)
         {
             return company.Teams.FirstOrDefault(team =>
                                                 Math.Abs(_teamService.GetExtraMaturity(team)) >= employee.ProgressionLevel

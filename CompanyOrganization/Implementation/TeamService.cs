@@ -25,12 +25,12 @@ namespace CompanyOrganization.Implementation
             return teams;
         }
 
-        public int GetCurrentMaturity(Domain.BusinessObjects.Team team)
+        public int GetCurrentMaturity(Team team)
         {
             return team.Employees.Sum(employee => employee.ProgressionLevel);
         }
 
-        public int GetExtraMaturity(Domain.BusinessObjects.Team team)
+        public int GetExtraMaturity(Team team)
         {
             return GetCurrentMaturity(team) - team.MinimunMaturity;
         }
