@@ -1,5 +1,4 @@
-﻿using CompanyOrganization.Contract;
-using CompanyOrganization.Domain.BusinessObjects;
+﻿using CompanyOrganization.Domain.BusinessObjects;
 using CompanyOrganization.Utils;
 using System;
 using System.Collections.Generic;
@@ -9,15 +8,15 @@ namespace CompanyOrganization.Implementation
 {
     public class TeamService 
     {
-        public List<Domain.BusinessObjects.Team> CreateTeams(IList<string> teamsLines)
+        public List<Team> CreateTeams(IList<string> teamsLines)
         {
-            var teams = new List<Domain.BusinessObjects.Team>();
+            var teams = new List<Team>();
             foreach (var line in teamsLines)
             {
                 var splitLine = line.Split(Constants.SEMICOLON).ToList();
                 ValidateTeamLine(splitLine);
 
-                teams.Add(new Domain.BusinessObjects.Team()
+                teams.Add(new Team()
                 {
                     Name = splitLine[Constants.INDEX_NAME_TEAM],
                     MinimunMaturity = Util.ConvertStringToInt(splitLine[Constants.INDEX_MINIMUM_MATURITY_TEAM]),

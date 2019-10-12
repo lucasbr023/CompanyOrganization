@@ -35,23 +35,23 @@
 
         public const string HELP = @"
 ==============HELP=========================================
-load team_file employees_file - files must be on the following folder: 
+Load team_file employees_file - files must be on the following folder: 
     '..\companyorganization\CompanyOrganization\Files'
 
-allocate - allocates employees to teams in the company
+Allocate - allocates employees to teams in the company
 
-promote number_employees_to_promote - promotes employees according to the criteria
+Promote number_employees_to_promote - promotes employees according to the criteria
 
-balance - balance teams for optimal scenario.
+Balance - balance teams for optimal scenario.
 
-exit - exits program
+Exit - exits program
 ================================
 example of files: team.csv, employees.csv
 example of command:
-load team.csv employees.csv
-allocate
-promote 2
-balance
+Load team.csv employees.csv
+Allocate
+Promote 2
+Balance
 ==========================================================";
     }
 }
