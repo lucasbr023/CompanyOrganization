@@ -79,7 +79,7 @@ namespace CompanyOrganization.Implementation
             return teams.ToList().FirstOrDefault();
         }
 
-        public string ToString(Company company)
+        private string ToString(Company company)
         {
             var toString = "===============BALANCE=============== \n";
             if (company.Teams.Any())

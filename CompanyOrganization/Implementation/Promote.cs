@@ -102,7 +102,7 @@ namespace CompanyOrganization.Implementation
                 + AgePoint(employee);
         }
 
-        public string ToString(IList<Employee> employees)
+        private string ToString(IList<Employee> employees)
         {
             var toString = "===============PROMOTE=============== \n";
             foreach (var employee in employees)

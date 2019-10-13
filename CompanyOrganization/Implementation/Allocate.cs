@@ -66,7 +66,7 @@ namespace CompanyOrganization.Implementation
             return company.Teams.OrderBy(team => team.GetExtraMaturity()).FirstOrDefault();
         }
 
-        public string ToString(Company company)
+        private string ToString(Company company)
         {
             var toString = "===============ALLOCATE=============== \n";
             if (company.Teams.Any())
