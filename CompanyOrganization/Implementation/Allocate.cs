@@ -9,12 +9,6 @@ namespace CompanyOrganization.Implementation
 {
     public class Allocate : ICommand
     {
-        private readonly TeamService _teamService;
-
-        public Allocate()
-        {
-            _teamService = new TeamService();
-        }
         public string Execute(string parameters = null)
         {
             var companyLocalStorage = CompanyLocalStorage.GetInstance;
@@ -41,18 +35,14 @@ namespace CompanyOrganization.Implementation
 
         private void ValidateTeamsMinimumMaturity(Company company)
         {
-            if (company.Teams.Any(team => _teamService.GetExtraMaturity(team) < 0))
-            {
+            if (company.Teams.Any(team => team.GetExtraMaturity() < 0))
                 throw new Exception(Messages.TeamsHaventEnoughMaturity);
-            }
         }
 
         private void ValidateCompany(Company company)
         {
             if (!company.Teams.Any())
-            {
                 throw new Exception(Messages.CompanyWithoutTeams);
-            }
         }
 
         private Team GetBestTeamToAllocate(Company company, Employee employee)
@@ -60,22 +50,20 @@ namespace CompanyOrganization.Implementation
             var allocateTeam = GetTeamWithLessThanMinimumMaturity(company, employee);
 
             if (allocateTeam == null)
-            {
                 allocateTeam = GetTeamWithLessRequiredMinimumMaturity(company);
-            }
             return allocateTeam;
         }
 
         private Team GetTeamWithLessThanMinimumMaturity(Company company, Employee employee)
         {
             return company.Teams.FirstOrDefault(team =>
-                                                Math.Abs(_teamService.GetExtraMaturity(team)) >= employee.ProgressionLevel
-                                                && _teamService.GetExtraMaturity(team) < 0);
+                                                Math.Abs(team.GetExtraMaturity()) >= employee.ProgressionLevel
+                                                && team.GetExtraMaturity() < 0);
         }
 
         private Team GetTeamWithLessRequiredMinimumMaturity(Company company)
         {
-            return company.Teams.OrderBy(team => _teamService.GetExtraMaturity(team)).FirstOrDefault();
+            return company.Teams.OrderBy(team => team.GetExtraMaturity()).FirstOrDefault();
         }
 
         public string ToString(Company company)
@@ -91,9 +79,8 @@ namespace CompanyOrganization.Implementation
                         $" - Current Maturity {team.Employees.Sum(e => e.ProgressionLevel)} \n ";
 
                     foreach (var employee in team.Employees)
-                    {
                         toString += $"{employee.Name} - {employee.ProgressionLevel} \n";
-                    }
+
                     toString += "\n";
                 }
             }

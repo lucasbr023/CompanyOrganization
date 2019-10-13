@@ -8,13 +8,6 @@ namespace CompanyOrganization.Implementation
 {
     public class Balance : ICommand
     {
-        private TeamService _teamService;
-
-        public Balance()
-        {
-            _teamService = new TeamService();
-        }
-
         public string Execute(string parameters = null)
         {
             var company = CompanyLocalStorage.GetInstance.GetCompany();
@@ -45,10 +38,8 @@ namespace CompanyOrganization.Implementation
 
         private void ValidateTeamsWithLessThanMinimumMaturity(Company company)
         {
-            if (company.Teams.Any(team => _teamService.GetExtraMaturity(team) < 0))
-            {
+            if (company.Teams.Any(team => team.GetExtraMaturity() < 0))
                 throw new Exception(Messages.TeamsHaventEnoughMaturity);
-            }
         }
 
         private void MoveEmployeeBetweenTeams(Team teamFrom, Team teamTo, Employee employee)
@@ -68,24 +59,22 @@ namespace CompanyOrganization.Implementation
 
         private int GetMaturityDifferenceBetweenTeams(Team teamMaximumMaturity, Team teamMinimumMaturity)
         {
-            return _teamService.GetExtraMaturity(teamMaximumMaturity) - _teamService.GetExtraMaturity(teamMinimumMaturity);
+            return teamMaximumMaturity.GetExtraMaturity() - teamMinimumMaturity.GetExtraMaturity();
         }
 
         private Team GetTeamMinimumMaturity(Company company)
         {
-            return company.Teams.OrderBy(team => _teamService.GetExtraMaturity(team)).FirstOrDefault();
+            return company.Teams.OrderBy(team => team.GetExtraMaturity()).FirstOrDefault();
         }
 
         private Team GetTeamMaximumMaturity(Company company)
         {
-            var maxMaturity = company.Teams.Max(team => _teamService.GetExtraMaturity(team));
+            var maxMaturity = company.Teams.Max(team => team.GetExtraMaturity());
 
-            var teams = company.Teams.Where(team => _teamService.GetExtraMaturity(team) == maxMaturity).ToList();
+            var teams = company.Teams.Where(team => team.GetExtraMaturity() == maxMaturity).ToList();
 
             if (teams.Count >= 2)
-            {
                 teams = teams.OrderBy(team => team.Employees.Min(x => x.ProgressionLevel)).ToList();
-            }
 
             return teams.ToList().FirstOrDefault();
         }
@@ -102,10 +91,8 @@ namespace CompanyOrganization.Implementation
                                 $"- Current Maturity {team.Employees.Sum(e => e.ProgressionLevel)} \n";
 
                     foreach (var employee in team.Employees)
-                    {
                         toString += $"{employee.Name} " +
                                     $"- {employee.ProgressionLevel} \n";
-                    }
                     toString += "\n";
                 }
             }

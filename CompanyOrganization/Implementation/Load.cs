@@ -1,4 +1,5 @@
 ﻿using CompanyOrganization.Contract;
+using CompanyOrganization.Domain.BusinessObjects;
 using CompanyOrganization.Storage;
 using CompanyOrganization.Utils;
 using System;
@@ -10,13 +11,11 @@ namespace CompanyOrganization.Implementation
 {
     public class Load : ICommand
     {
-        private TeamService _teamService;
-        private EmployeeService _employeeService;
+        private CompanyLocalStorage _companyLocalStorage;
 
         public Load()
         {
-            _teamService = new TeamService();
-            _employeeService = new EmployeeService();
+            _companyLocalStorage = CompanyLocalStorage.GetInstance;
         }
 
         public string Execute(string parameters)
@@ -24,18 +23,24 @@ namespace CompanyOrganization.Implementation
             string[] filesNames = parameters.Replace("Load ", string.Empty).Split(' ');
             if (filesNames.Length == Constants.NUMBER_ARGUMENTS_LOAD)
             {
-                var companyLocalStorage = CompanyLocalStorage.GetInstance;
+                _companyLocalStorage.CreateCompany();
 
-                var teamFilePath = GetFilePath(filesNames[Constants.INDEX_TEAM_FILE].Replace("\"", string.Empty));
+                UpdateEntityWithCsvFile(filesNames);
+
                 var employeeFilePath = GetFilePath(filesNames[Constants.INDEX_EMPLOYEE_FILE].Replace("\"", string.Empty));
-
-                companyLocalStorage.CreateCompany();
-                companyLocalStorage.UpdateTeams(_teamService.CreateTeams(GetLinesCsvFile(teamFilePath)));
-                companyLocalStorage.UpdateEmployees(_employeeService.CreateEmployees(GetLinesCsvFile(employeeFilePath)));
+                var lines = GetLinesCsvFile(employeeFilePath);
+                _companyLocalStorage.UpdateEmployees(lines.Select(line => new Employee(line)).ToList());
 
                 return Messages.FileLoaded;
             }
             return string.Empty;
+        }
+
+        private void UpdateEntityWithCsvFile(string[] filesNames)
+        {
+            var filePath = GetFilePath(filesNames[Constants.INDEX_TEAM_FILE].Replace("\"", string.Empty));
+            var lines = GetLinesCsvFile(filePath);
+            _companyLocalStorage.UpdateTeams(lines.Select(line => new Team(line)).ToList());
         }
 
         private IList<string> GetLinesCsvFile(string filePath)
@@ -54,7 +59,7 @@ namespace CompanyOrganization.Implementation
             return lines;
         }
 
-        public string GetFilePath(string fileName)
+        private string GetFilePath(string fileName)
         {
             return AppDomain.CurrentDomain.BaseDirectory + @"..\..\..\Files\" + fileName;
         }
